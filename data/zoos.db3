@@ -1,0 +1,41 @@
+{
+    "type": "database",
+    "name": "lambda",
+    "objects": [
+        {
+            "type": "table",
+            "database": null,
+            "name": "zoos",
+            "withoutRowId": true,
+            "ddl": "CREATE TABLE `zoos` (\n\t`id`\tINTEGER PRIMARY KEY AUTOINCREMENT,\n\t`name`\tTEXT NOT NULL UNIQUE\n)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "name",
+                    "type": "TEXT",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE\n"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+            ]
+        }
+    ]
+}

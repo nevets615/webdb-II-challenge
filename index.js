@@ -1,4 +1,3 @@
-
 const knex = require("knex");
 const express = require("express");
 const helmet = require("helmet");
@@ -10,8 +9,9 @@ server.use(helmet());
 const knexConfig = {
   client: "sqlite3",
   connection: {
-    filename: "./data/zoos.db3"
-  }
+    filename: "./zoos.db3"
+  },
+  useNullAsDefault: true
 };
 const db = knex(knexConfig);
 
@@ -54,13 +54,39 @@ server.post("/zoos", (req, res) => {
 });
 
 server.put("/zoos:id", (req, res) => {
-  // update roles
-  res.send("Write code to modify a role");
+  db("zoos")
+    .where({ id: req.params.id })
+    .update(req.body)
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: `${count} ${count > 1 ? "records" : "record"} updated`
+        });
+      } else {
+        res.status(404).json({ message: "zoos does not exist" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
 });
 
 server.delete("/zoos:id", (req, res) => {
-  // remove roles (inactivate the role)
-  res.send("Write code to remove a role");
+  db("zoos")
+    .where({ id: req.params.id })
+    .del()
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: `${count} ${count > 1 ? "records" : "record"} deleted`
+        });
+      } else {
+        res.status(404).json({ message: "zoo does not exist" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
 });
 
 // endpoints here
